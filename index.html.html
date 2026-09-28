@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>VitalU</title>
+<style>
+:root{--bg:#f6f4ef;--card:#fff;--tx:#1d2320;--mu:#6c746f;--ac:#2f8f6b;--bd:#e5e2da;--tr:#e8e5dc;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:0}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#121614;--card:#1c221f;--tx:#eef2ef;--mu:#93a09a;--ac:#48c596;--bd:#2a332f;--tr:#2a332f}}
+:root[data-theme="dark"]{--bg:#121614;--card:#1c221f;--tx:#eef2ef;--mu:#93a09a;--ac:#48c596;--bd:#2a332f;--tr:#2a332f}
+*{box-sizing:border-box}html{font-size:16px;height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;height:100%;background:var(--bg);color:var(--tx);font-family:Georgia,'Iowan Old Style',serif}
+button,input{font:inherit;color:inherit}
+#app{max-width:520px;margin:0 auto;height:100%;display:flex;flex-direction:column}
+main{flex:1;overflow-y:auto;padding:1rem 1rem 1.5rem}
+h1,h2,h3{margin:0;font-weight:600}
+.sans{font-family:system-ui,-apple-system,'Segoe UI',sans-serif}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:1rem;padding:1rem;margin-bottom:.8rem}
+.mu{color:var(--mu);font-size:.85rem}
+.top{display:flex;align-items:center;gap:.7rem;margin-bottom:1rem}
+.logo{width:2.8rem;height:2.8rem;border-radius:.8rem;background:#050505;display:grid;place-items:center;overflow:hidden;font-size:1.4rem;flex:none}
+.logo img{width:100%;height:100%;object-fit:cover;image-rendering:pixelated}
+.bar{height:.7rem;background:var(--tr);border-radius:1rem;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--ac);border-radius:1rem;transition:width .5s}
+.q{display:flex;gap:.7rem;align-items:center;padding:.7rem 0;border-top:1px solid var(--bd)}
+.q:first-of-type{border-top:0}
+.q .ic{font-size:1.4rem}.q .b{flex:1;min-width:0}
+.chk{width:1.4rem;height:1.4rem;border-radius:50%;border:2px solid var(--bd);display:grid;place-items:center;font-size:.8rem;flex:none}
+.chk.on{background:var(--ac);border-color:var(--ac);color:#fff}
+.mini{height:.35rem;background:var(--tr);border-radius:1rem;margin-top:.35rem;overflow:hidden}.mini i{display:block;height:100%;background:var(--ac)}
+.btn{border:1px solid var(--ac);background:none;color:var(--ac);padding:.35rem .8rem;border-radius:2rem;cursor:pointer;font-size:.8rem}
+.btn.f{background:var(--ac);color:#fff}.btn:disabled{opacity:.35;cursor:default}
+nav{display:flex;gap:.2rem;background:var(--card);border:1px solid var(--bd);border-radius:2rem;margin:0 .8rem calc(.6rem + env(safe-area-inset-bottom,0px));padding:.35rem;box-shadow:0 8px 24px rgba(0,0,0,.15)}
+nav button{flex:1;border:0;background:none;padding:.5rem .2rem;cursor:pointer;color:var(--mu);display:flex;flex-direction:column;align-items:center;gap:.1rem;font-size:.7rem;border-radius:1.6rem;transition:.25s}
+nav button span{font-size:1.3rem}nav button.on{color:#fff;background:var(--ac);font-weight:600;box-shadow:0 4px 12px rgba(47,143,107,.4)}
+.hint{background:linear-gradient(135deg,rgba(240,138,75,.16),var(--card));border-color:rgba(224,138,74,.55);padding:1.1rem}
+.hint .lab{color:#e08a4a;font-weight:700;font-size:.9rem;margin-bottom:.5rem}
+.hint h2,.hero h2{font-size:1.3rem;line-height:1.25;margin:.2rem 0 .6rem}
+.hero{background:linear-gradient(135deg,rgba(47,143,107,.16),var(--card));padding:1.1rem;border-radius:1.2rem}
+.hero .lab{color:var(--ac);font-weight:700;font-size:.85rem;letter-spacing:.06em;margin-bottom:.5rem}
+.sec{font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;color:var(--mu);font-weight:700;margin:1.2rem .2rem .6rem}
+.qc{display:flex;gap:.8rem;align-items:center;background:var(--card);border:1px solid var(--bd);border-radius:1.1rem;padding:.9rem;margin-bottom:.6rem}
+.qc .ico{width:3rem;height:3rem;border-radius:.9rem;background:var(--tr);display:grid;place-items:center;font-size:1.4rem;flex:none}
+.qc .b{flex:1;min-width:0}.qc .b b{font-size:1.05rem;display:block}.qc .b p{margin:.2rem 0;color:var(--mu)}.qc .b small{color:var(--mu);font-weight:600;font-size:.75rem}
+.circ{width:2.6rem;height:2.6rem;border-radius:50%;background:var(--tr);border:2px solid var(--bd);display:grid;place-items:center;cursor:pointer;flex:none;color:var(--mu)}
+.circ.act{border-color:var(--ac);color:var(--ac)}.circ.on{background:var(--ac);color:#fff;border-color:var(--ac)}
+.sw{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:.7rem}.sw1{width:2.2rem;height:2.2rem;border-radius:50%;border:3px solid transparent;cursor:pointer;padding:0;display:block}.sw1.on{border-color:var(--tx)}
+.how{display:flex;gap:.6rem;align-items:flex-start;margin:.5rem 0}.how i{font-style:normal;background:var(--ac);color:#fff;width:1.5rem;height:1.5rem;border-radius:50%;display:grid;place-items:center;font-size:.8rem;flex:none}.how span{flex:1}
+.st{font-size:.75rem;padding:.3rem .7rem;border-radius:2rem;border:1px solid var(--bd);color:var(--mu);white-space:nowrap}.st.on{background:var(--ac);border-color:var(--ac);color:#fff}
+.think{background:var(--tr);border-radius:.8rem;padding:.75rem .9rem;margin-top:.8rem;font-size:.9rem}.think p{margin:.3rem 0}.think b{font-size:.8rem;letter-spacing:.05em;text-transform:uppercase;color:var(--mu)}
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.5);display:grid;place-items:center;z-index:9;padding:1rem;color:var(--tx)}.md{background:var(--card);border-radius:1.4rem;padding:1.6rem;text-align:center;max-width:20rem;animation:pp .3s}.md .e{font-size:3rem}@keyframes pp{from{transform:scale(.8);opacity:0}}
+.seg{display:flex;gap:.4rem;margin:.6rem 0}.seg button{flex:1;padding:.5rem;border-radius:.7rem;border:1px solid var(--bd);background:var(--card);cursor:pointer}
+.seg button.on{background:var(--ac);color:#fff;border-color:var(--ac)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem;text-align:center}
+.grid b{display:block;font-size:1.15rem}
+.av{display:grid;grid-template-columns:repeat(6,1fr);gap:.4rem}
+.av button{font-size:1.6rem;border:2px solid transparent;background:var(--tr);border-radius:.8rem;padding:.3rem;cursor:pointer}
+.av button.on{border-color:var(--ac)}
+input[type=text],input[type=date]{width:100%;padding:.6rem;border-radius:.7rem;border:1px solid var(--bd);background:var(--bg)}
+input[type=range]{width:100%;accent-color:var(--ac)}
+.row{display:flex;justify-content:space-between;align-items:center;gap:.6rem;margin:.5rem 0}
+@keyframes bob{50%{transform:translateY(-6px)}}.bob svg{animation:bob 2.4s ease-in-out infinite}
+svg{width:100%;height:auto;display:block}
+</style></head><body><div id="app"><main id="m"></main>
+<nav class="sans" id="nav"></nav></div>
+<script>
+const $=s=>document.querySelector(s);
+const M={sleep:{n:'Sleep',u:'h',i:'🌙',c:'#7c6cf0',d:1,f:v=>v.toFixed(1)},steps:{n:'Steps',u:'',i:'👟',c:'#22b07d',d:1,f:v=>Math.round(v).toLocaleString()},phone:{n:'Phone use',u:'h',i:'📱',c:'#f08a4b',d:-1,f:v=>v.toFixed(1)},hr:{n:'Heart rate',u:'bpm',i:'❤️',c:'#e5566d',d:-1,f:v=>Math.round(v)}};
+const T={sleep:[[6,6.5,7],[7.5,8,8.5]],steps:[[3000,5000,7000],[8000,10000,12000]],phone:[[6,5,4.5],[4,3,2]],hr:[[78,75,72],[70,67,64]]};
+const TX={sleep:t=>`Sleep ${t}h or more`,steps:t=>`Walk ${t.toLocaleString()} steps`,phone:t=>`Screen time under ${t}h`,hr:t=>`Avg heart rate under ${t} bpm`};
+const NM={sleep:[['Gentle wind-down','Ease into rest','Early night'],['Solid sleep','Deep rest','Full recharge']],steps:[['Mindful movement','Easy stroll','Steady steps'],['Active day','Step challenge','Big mover']],phone:[['Screen breather','Soft limit','Mindful scrolling'],['Tech-light day','Focus mode','Digital detox']],hr:[['Quiet reset','Calm heart','Easy rhythm'],['Steady pulse','Resting strong','Calm and strong']]};
+const LB={sleep:'sleep',steps:'movement',phone:'screen time',hr:'heart rate'},ST0={sleep:'Wind down 30 minutes earlier tonight.',steps:'Add a short movement break this afternoon.',phone:'Put your phone away for a calm 20 minutes.',hr:'Take 5 quiet minutes for slow, steady breathing.'};
+const Q=[];for(const m in T)T[m].forEach((a,ti)=>a.forEach((t,i)=>Q.push({id:m+ti+i,m,tier:ti?'focus':'gentle',t,txt:TX[m](t),name:NM[m][ti][i],xp:(ti?[8,10,12]:[5,6,8])[i]})));
+const DEFAULT_LOGO='data:image/png;base64,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';
+const today=()=>new Date().toISOString().slice(0,10);
+let S={name:'Friend',av:'🦊',theme:null,size:1,start:today(),pk:{},xp:0,claim:{},fed:'',goals:[],pop:{},pc:'#1f9d76',logo:'',tab:'home',view:'week',tier:'gentle'};
+try{Object.assign(S,JSON.parse(localStorage.getItem('qa')||'{}'))}catch(e){}
+const save=()=>{try{localStorage.setItem('qa',JSON.stringify(S))}catch(e){}};
+// simulated wearable data, 60 days
+function rng(a){return()=>{a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+const R=rng(42),D={sleep:[],steps:[],phone:[],hr:[]};
+for(let i=0;i<60;i++){D.sleep.push(5.6+R()*2.8);D.steps.push(3000+R()*9500);D.phone.push(2+R()*5);D.hr.push(63+R()*16)}
+const L=m=>D[m][59];
+const avg=(m,n)=>{const a=D[m].slice(-n);return a.reduce((x,y)=>x+y,0)/a.length};
+const prog=q=>{const v=L(q.m);return Math.min(1,M[q.m].d>0?v/q.t:q.t/v)};
+const done=q=>M[q.m].d>0?L(q.m)>=q.t:L(q.m)<=q.t;
+function suggest(m){const v=D[m].slice(-8,-1),a=v.reduce((x,y)=>x+y,0)/7,c=Q.filter(q=>q.m===m).sort((x,y)=>M[m].d>0?x.t-y.t:y.t-x.t);return c.find(q=>M[m].d>0?q.t>a:q.t<a)||c[c.length-1]}
+function insight(){let b=null;for(const m in M){const v=D[m].slice(-8,-1),a=v.reduce((x,y)=>x+y,0)/7,dev=(L(m)-a)/a*100,bad=M[m].d>0?-dev:dev;if(!b||bad>b.bad)b={m,dev,bad}}return{m:b.m,step:ST0[b.m],line:`VitalU insight: your ${LB[b.m]} is ${Math.abs(Math.round(b.dev))}% away from your personal baseline.`}}
+function todays(){const p=S.pk[today()]||(S.pk[today()]={});Object.keys(M).forEach(m=>{if(!p[m])p[m]=suggest(m).id});save();return Object.keys(M).map(m=>Q.find(q=>q.id===p[m]))}
+function award(){const d=today(),c=S.claim[d]||(S.claim[d]=[]);todays().forEach(q=>{if(done(q)&&!c.includes(q.m)){c.push(q.m);S.xp+=q.xp}});save()}
+const ST=[['Egg',0],['Hatchling',40],['Young U',150],['Grown U',350],['Legend U',650]];
+const AD=['gg........gg','gg........gg','gwg......gwg','gwg......gwg','ggg......ggg','gggg....gggg','gggggggggggg','gkkgggggkkgg','ggggwwwwgggg','.gggggggggg.','..gggggggg..'];
+const ART=[['....gggg....','...gggggg...','..gggggggg..','..gwggggdg..','.gwgggggddg.','.gggdgggggg.','.gggggggddg.','.gdgggggggg.','.ggggdggggg.','..gggggggg..','...gggggg...','....gggg....'],
+['...gggggg...','..gggggggg..','..gkkggkkg..','..gggggggg..','..gggwwggg..','...gggggg...','..dd....dd..'],AD.slice(3),AD,['yy........yy','yy........yy',...AD.slice(2)].map(r=>r.padEnd(12,'.').slice(0,12))];
+const stage=()=>{let i=0;ST.forEach((x,k)=>{if(S.xp>=x[1])i=k});return i};
+const mix=(h,t,a)=>'#'+[16,8,0].map(k=>Math.round((parseInt(h.slice(1),16)>>k&255)*(1-a)+t*a).toString(16).padStart(2,'0')).join('');
+const PAL=['#1f9d76','#4f8df0','#e5566d','#9b6cf0','#f0a34b','#e86bb0','#5fc7d6','#8a8f98'];
+function setPc(c){S.pc=c;save();go()}
+function art(i){const r=ART[i],C={g:S.pc,d:mix(S.pc,0,.3),w:mix(S.pc,255,.8),k:'#0b0b0b',y:'#f2c14e'};return `<svg viewBox="0 0 12 ${r.length}" shape-rendering="crispEdges" style="width:${6+i*1.7}rem;margin:auto">${r.map((row,y)=>[...row].map((c,x)=>c=='.'?'':`<rect x="${x}" y="${y}" width="1.02" height="1.02" fill="${C[c]}"/>`).join('')).join('')}</svg>`}
+function petView(){const i=stage(),nx=ST[i+1],fed=S.fed===today(),cl=S.claim[today()]||[],pc=nx?(S.xp-ST[i][1])/(nx[1]-ST[i][1])*100:100;
+return `<h1>Your pet</h1><p class="mu sans">It grows a little with every bit of progress.</p>
+<div class="card sans" style="text-align:center;margin-top:1rem"><div class="bob" style="height:11rem;display:flex;align-items:flex-end">${art(i)}</div><h2 style="margin-top:.6rem">${ST[i][0]} ${fed?'😊':'🥺'}</h2><div class="mu" style="margin:.2rem 0 .6rem">${S.xp} XP${nx?` · ${nx[1]-S.xp} to ${nx[0]}`:' · fully grown!'}</div><div class="bar"><i style="width:${pc}%"></i></div></div>
+<div class="card sans"><div class="row"><div><b>Daily feeding</b><div class="mu">+5 XP, once a day</div></div><button class="btn f" ${fed?'disabled':''} onclick="feed()">${fed?'Fed today ✓':'🍎 Feed'}</button></div>
+<div class="row"><div><b>Quest growth</b><div class="mu">5–12 XP per completed quest (${cl.length}/4 done today)</div></div></div></div>
+<div class="card sans"><b>Pet colour</b><div class="sw">${PAL.map(c=>`<button class="sw1 ${S.pc==c?'on':''}" style="background:${c}" aria-label="${c}" onclick="setPc('${c}')"></button>`).join('')}<label class="sw1" style="background:conic-gradient(red,yellow,lime,cyan,blue,magenta,red);position:relative"><input type="color" value="${S.pc}" onchange="setPc(this.value)" style="opacity:0;position:absolute;inset:0;width:100%;height:100%;cursor:pointer"></label></div></div>`}
+function feed(){if(S.fed!==today()){S.fed=today();S.xp+=5;save()}go()}
+function dayN(){return Math.max(1,Math.floor((new Date(today())-new Date(S.start))/864e5)+1)}
+// charts
+function chart(m,n){const v=D[m].slice(-n),c=M[m].c,W=320,H=120,mx=Math.max(...v)*1.1,bw=W/n;
+let s=`<svg viewBox="0 0 ${W} ${H+18}">`;
+if(m==='hr'){const p=v.map((x,i)=>`${(i+.5)*bw},${H-x/mx*H}`).join(' ');s+=`<polyline points="${p}" fill="none" stroke="${c}" stroke-width="2.5" stroke-linejoin="round"/>`+v.map((x,i)=>n<=7?`<circle cx="${(i+.5)*bw}" cy="${H-x/mx*H}" r="3.5" fill="${c}"/>`:'').join('')}
+else s+=v.map((x,i)=>`<rect x="${i*bw+bw*.15}" y="${H-x/mx*H}" width="${bw*.7}" height="${x/mx*H}" rx="${n<=7?5:1.5}" fill="${c}" opacity="${i===n-1?1:.6}"/>`).join('');
+for(let i=0;i<n;i+=n<=7?1:5){const d=new Date(Date.now()-(n-1-i)*864e5);s+=`<text x="${(i+.5)*bw}" y="${H+14}" font-size="9" text-anchor="middle" fill="var(--mu)">${n<=7?'SMTWTFS'[d.getDay()]:d.getDate()}</text>`}
+return s+'</svg>'}
+// views
+function home(){const q=todays(),p=q.reduce((a,x)=>a+prog(x),0)/q.length,n=q.filter(done).length;
+return `<div class="top"><div class="logo"><img src="${DEFAULT_LOGO}" alt="logo"></div><b class="sans">VitalU</b></div>
+<h1 style="font-size:1.7rem">Hey there, ${esc(S.name)} ${S.av}</h1>
+<p class="mu sans" style="margin:.3rem 0 1rem">Day ${dayN()} since you started your goal</p>
+<div class="card hint sans"><div class="lab">✨ Today's small step</div><h2>${insight().step}</h2><p class="mu" style="margin:0">${insight().line}</p></div>
+<div class="card"><div class="row sans"><b>Today's progress</b><span>${Math.round(p*100)}%</span></div><div class="bar"><i style="width:${p*100}%"></i></div><div class="mu sans" style="margin-top:.5rem">${n} of ${q.length} quests complete</div></div>
+<div class="row sans"><h3>Today's quests</h3><button class="btn" onclick="sync()">↻ Sync</button></div>
+<div class="card sans">${q.map(qRow).join('')}</div>
+<div class="grid card sans">${Object.keys(M).map(m=>`<div><span>${M[m].i}</span><b>${M[m].f(L(m))}</b><span class="mu">${M[m].u||M[m].n}</span></div>`).join('').replace(/(<div>.*?<\/div>){2}/,'$&')}</div>
+<p class="mu sans" style="text-align:center">Simulated data · connect a wearable later</p>`}
+function qRow(q){const d=done(q);return `<div class="q"><span class="ic">${M[q.m].i}</span><div class="b"><div>${q.txt} <span class="mu">· +${q.xp} XP</span></div><div class="mini"><i style="width:${prog(q)*100}%"></i></div></div><span class="chk ${d?'on':''}">${d?'✓':''}</span></div>`}
+function quests(){todays();const ps=S.pk[today()],I=insight(),T4=todays(),f=T4.find(q=>q.m===I.m),sg=Object.keys(M).map(m=>suggest(m).id);
+const card=(q,btn)=>`<div class="qc sans"><div class="ico">${M[q.m].i}</div><div class="b"><b>${q.name}</b><p>${q.txt}.</p><small>+${q.xp} XP · ${Math.round(prog(q)*100)}% there${sg.includes(q.id)?' · ⭐ suggested':''}</small></div>${btn}</div>`;
+return `<div class="top" style="margin-bottom:.4rem"><div class="logo" style="width:2rem;height:2rem;border-radius:.6rem"><img src="${DEFAULT_LOGO}" alt=""></div><h1>Quests</h1></div>
+<p class="mu sans" style="margin:0 0 1rem">Small, realistic actions that help you care for your whole wellbeing.</p>
+<div class="card hero sans"><div class="lab">✨ TODAY'S FOCUS · +${f.xp} XP</div><h2>${f.txt}.</h2><p class="mu" style="margin:0">${I.line}</p></div>
+<div class="card sans"><b>How it works</b><div class="how"><i>1</i><span>Choose <b>one quest for each area</b> (sleep, steps, phone, heart). We pre-pick ⭐ ones for you.</span></div><div class="how"><i>2</i><span>Your wearable data <b>completes them automatically</b>. No tapping needed.</span></div><div class="how"><i>3</i><span>Every finished quest earns <b>XP that grows your pet</b> 🐾</span></div></div>
+<div class="sec sans">Your 4 quests today</div>
+${T4.map(q=>{const d=done(q);return card(q,`<span class="st ${d?'on':''}">${d?'✓ Done':'In progress'}</span>`)}).join('')}
+<div class="sec sans">Change a quest</div>
+<div class="seg sans"><button class="${S.tier=='gentle'?'on':''}" onclick="S.tier='gentle';go()">🌸 Gentle · easier</button><button class="${S.tier=='focus'?'on':''}" onclick="S.tier='focus';go()">🎯 Goal-focused · harder</button></div>
+${Object.keys(M).map(m=>`<h3 class="sans" style="margin:1rem .2rem .5rem">${M[m].i} ${M[m].n} <span class="mu" style="font-weight:400">· pick 1</span></h3>`+Q.filter(q=>q.m===m&&q.tier===S.tier).map(q=>{const on=ps[m]===q.id;return card(q,`<button class="btn ${on?'f':''}" onclick="tog('${q.id}')">${on?'✓ Chosen':'Choose'}</button>`)}).join('')).join('')}`}
+function thought(m){const pv=D[m].slice(-8,-1).reduce((a,b)=>a+b,0)/7,c=(a,b)=>{const p=(a-b)/b*100,g=M[m].d>0?p>0:p<0;return{p,st:Math.abs(p)<3,g,t:`${Math.abs(Math.round(p))}% ${p>0?'higher':'lower'}`}};
+const a=c(L(m),pv),b=c(avg(m,7),avg(m,30));
+const l1=a.st?'Today is right in line with your last 7 days.':`Today is ${a.t} than your last 7 days ${a.g?'👍 a step in the right direction.':'👀 a little off your usual.'}`;
+const l2=b.st?'This week matches your monthly pattern, so things are steady.':`This week averages ${b.t} than your month ${b.g?'👍 you are improving.':'👀 a small slip from your monthly pace.'}`;
+const up=(a.g||a.st)&&(b.g||b.st),dn=!a.g&&!a.st&&!b.g&&!b.st;
+const tk=up?'Overall: trending well. Keep the routine going.':dn?'Overall: trending down. A gentle quest can help you reset.':'Overall: mixed signals. One day does not set a trend, so watch the week.';
+return `<div class="think"><b>What this says</b><p>${l1}</p><p>${l2}</p><p><i>${tk}</i></p></div>`}
+function stats(){const n=S.view=='week'?7:30,q=todays();
+return `<h1>Today's review</h1><p class="mu sans">${q.filter(done).length}/${q.length} quests done today</p>
+<div class="seg sans"><button class="${S.view=='week'?'on':''}" onclick="S.view='week';go()">Last 7 days</button><button class="${S.view=='month'?'on':''}" onclick="S.view='month';go()">Last 30 days</button></div>
+${Object.keys(M).map(m=>`<div class="card sans"><div class="row"><h3>${M[m].i} ${M[m].n}</h3><span class="mu">${M[m].u}</span></div>${chart(m,n)}
+<div class="grid" style="margin-top:.6rem"><div><span class="mu">Today</span><b>${M[m].f(L(m))}</b></div><div><span class="mu">Week avg</span><b>${M[m].f(avg(m,7))}</b></div><div><span class="mu">Month avg</span><b>${M[m].f(avg(m,30))}</b></div></div>${thought(m)}</div>`).join('')}`}
+function profile(){const dark=document.documentElement.dataset.theme?document.documentElement.dataset.theme=='dark':matchMedia('(prefers-color-scheme:dark)').matches;
+return `<h1>Profile</h1>
+<div class="card sans"><h3>Avatar</h3><div class="av" style="margin-top:.6rem">${'🦊🐼🐸🦉🐙🦄🐢🐱🐧🦋🐻🌵'.match(/./gu).map(a=>`<button class="${S.av==a?'on':''}" onclick="S.av='${a}';go()">${a}</button>`).join('')}</div></div>
+<div class="card sans"><h3>Name</h3><input type="text" value="${esc(S.name)}" maxlength="20" oninput="S.name=this.value||'Friend';save()"><div class="mu" style="margin:.8rem 0 .3rem">Goal start date</div><input type="date" value="${S.start}" onchange="S.start=this.value;save()"></div>
+<div class="card sans"><b class="mu">Your wellbeing</b><p class="mu" style="margin:.6rem 0 0;font-size:1rem">VitalU looks at all of your check-in data together instead of asking you to choose one goal.</p></div>
+<div class="card sans"><h3>🎯 My goals</h3><p class="mu" style="margin:.3rem 0 0">Set what you are working toward. Your daily quests support all of them.</p>${['short','long'].map(t=>`<div class="sec" style="margin:1rem 0 .4rem">${t=='short'?'Short-term · this week or month':'Long-term · 3 months and beyond'}</div>${S.goals.filter(g=>g.type==t).map(g=>`<div class="row"><label style="display:flex;gap:.5rem;align-items:center;flex:1"><input type="checkbox" ${g.done?'checked':''} onchange="tgGoal(${g.id})" style="accent-color:var(--ac);width:1.2rem;height:1.2rem"><span style="${g.done?'text-decoration:line-through;color:var(--mu)':''}">${esc(g.txt)}</span></label><button class="btn" aria-label="Delete goal" onclick="delGoal(${g.id})">✕</button></div>`).join('')||'<div class="mu">No goals yet.</div>'}<div class="row" style="margin-top:.6rem"><input type="text" id="gi-${t}" placeholder="${t=='short'?'e.g. Sleep 7h for 5 nights':'e.g. Walk 8,000 steps daily by December'}" maxlength="60" onkeydown="if(event.key===\'Enter\')addGoal(\'${t}\')"><button class="btn f" onclick="addGoal('${t}')">Add</button></div>`).join('')}</div>
+<div class="card sans"><h3>📡 Data simulator</h3><p class="mu" style="margin:.3rem 0">Set today's wearable values by hand. Quests and stats update instantly.</p>
+${[['sleep',3,10,.1],['steps',0,20000,100],['phone',0,12,.1],['hr',50,100,1]].map(([m,lo,hi,st])=>`<div class="row"><span>${M[m].i} ${M[m].n}</span><b id="sv${m}">${M[m].f(L(m))} ${M[m].u}</b></div><input type="range" min="${lo}" max="${hi}" step="${st}" value="${L(m)}" oninput="D['${m}'][59]=+this.value;$('#sv${m}').textContent=M['${m}'].f(+this.value)+' ${M[m].u}';award();checkPop()">`).join('')}
+<div class="row" style="margin-top:.8rem;flex-wrap:wrap"><button class="btn" onclick="rndToday()">🎲 Randomize today</button><button class="btn" onclick="rndAll()">🎲 Randomize all days</button><button class="btn" onclick="location.reload()">Reset</button></div></div>
+<div class="card sans"><h3>Settings</h3>
+<div class="row"><span>Dark mode</span><button class="btn ${dark?'f':''}" onclick="theme(${!dark})">${dark?'On':'Off'}</button></div>
+<div class="mu" style="margin-top:.8rem">Text size</div><input type="range" min=".85" max="1.4" step=".05" value="${S.size}" oninput="S.size=+this.value;fs();save()"><div class="row mu"><span style="font-size:.8rem">A</span><span style="font-size:1.3rem">A</span></div>
+</div>`}
+const esc=s=>s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function tog(id){const q=Q.find(x=>x.id===id);S.pk[today()][q.m]=id;save();go()}
+function sync(){D.steps[59]+=300+R()*900;D.sleep[59]=Math.min(9.5,D.sleep[59]+R()*.2);D.phone[59]+=R()*.4;D.hr[59]=63+R()*16;go()}
+function rndToday(){D.sleep[59]=5+Math.random()*4;D.steps[59]=1500+Math.random()*13000;D.phone[59]=1.5+Math.random()*6;D.hr[59]=60+Math.random()*22;go()}
+function rndAll(){for(let i=0;i<60;i++){D.sleep[i]=5+Math.random()*4;D.steps[i]=1500+Math.random()*13000;D.phone[i]=1.5+Math.random()*6;D.hr[i]=60+Math.random()*22}go()}
+function theme(d){S.theme=d?'dark':'light';document.documentElement.dataset.theme=S.theme;save();go()}
+function fs(){document.documentElement.style.fontSize=16*S.size+'px'}
+const tabs=[['home','🏠','Home'],['quests','🎯','Quests'],['pet','🐾','Pet'],['stats','📊','Stats'],['profile','👤','Profile']];
+function addGoal(t){const v=$('#gi-'+t).value.trim();if(!v)return;S.goals.push({id:Date.now(),txt:v,type:t,done:false});save();go()}
+function tgGoal(id){const g=S.goals.find(x=>x.id==id);g.done=!g.done;save();go()}
+function delGoal(id){S.goals=S.goals.filter(x=>x.id!=id);save();go()}
+function checkPop(){const q=todays(),n=q.filter(done).length,d=today(),p=S.pop[d]||(S.pop[d]=[]);let k=null;
+if(n===q.length&&!p.includes('all'))k='all';else if(n>=Math.ceil(q.length/3)&&n<q.length&&!p.includes('third')&&!p.includes('all'))k='third';
+if(!k)return;p.push(k);if(k==='all')p.push('third');save();
+const m=k==='all'?['🎉',"Yaayy! You've done it for the day",`All ${q.length} quests complete. Your pet is proud of you!`]:['💪','Almost there, you can do this',`You have finished ${n} of ${q.length} quests. Keep going!`];
+const o=document.getElementById('pop');if(o)o.remove();
+const e=document.createElement('div');e.id='pop';e.className='ov';e.setAttribute('role','dialog');e.innerHTML=`<div class="md sans"><div class="e">${m[0]}</div><h2 style="margin:.5rem 0">${m[1]}</h2><p class="mu" style="margin:0 0 1rem">${m[2]}</p><button class="btn f" onclick="this.closest('.ov').remove()">${k==='all'?'Yay!':'Got it'}</button></div>`;e.onclick=ev=>{if(ev.target===e)e.remove()};document.body.appendChild(e)}
+function go(){award();const y=$('#m').scrollTop;$('#m').innerHTML={home,quests,pet:petView,stats,profile}[S.tab]();$('#m').scrollTop=y;checkPop();
+$('#nav').innerHTML=tabs.map(t=>`<button class="${S.tab==t[0]?'on':''}" onclick="S.tab='${t[0]}';save();go();$('#m').scrollTop=0"><span>${t[1]}</span>${t[2]}</button>`).join('')}
+if(S.theme)document.documentElement.dataset.theme=S.theme;fs();go();
+</script></body></html>
